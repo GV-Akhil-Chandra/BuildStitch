@@ -1,4 +1,4 @@
-package com.BuildStitch_monolith.Security;
+package com.BuildStitch_monolith.Service;
 
 import com.BuildStitch_monolith.DTO.Auth.UserProfileDTO;
 

@@ -3,7 +3,7 @@ package com.BuildStitch_monolith.Controller;
 import com.BuildStitch_monolith.DTO.Project.ProjectRequest;
 import com.BuildStitch_monolith.DTO.Project.ProjectResponse;
 import com.BuildStitch_monolith.DTO.Project.ProjectSummaryDTO;
-import com.BuildStitch_monolith.Security.ProjectService;
+import com.BuildStitch_monolith.Service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
