@@ -23,7 +23,7 @@ public class Subscription {
     private String billingCustomerId;
     private String billingSubscriptionId;
     @Enumerated(value = EnumType.STRING)
-    private SubscriptionStatus status;
+     private SubscriptionStatus status;
 
     private Instant currentPeriodStart;
     private Instant currentPeriodEnd;
