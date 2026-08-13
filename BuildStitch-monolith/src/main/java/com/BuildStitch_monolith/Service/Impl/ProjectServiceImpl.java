@@ -5,7 +5,7 @@ import com.BuildStitch_monolith.DTO.Project.ProjectResponse;
 import com.BuildStitch_monolith.DTO.Project.ProjectSummaryDTO;
 import com.BuildStitch_monolith.Entity.Project;
 import com.BuildStitch_monolith.Entity.User;
-import com.BuildStitch_monolith.Repository.ProjectMapper;
+import com.BuildStitch_monolith.Mapper.ProjectMapper;
 import com.BuildStitch_monolith.Repository.ProjectRepository;
 import com.BuildStitch_monolith.Repository.UserRepository;
 import com.BuildStitch_monolith.Service.ProjectService;
@@ -25,7 +25,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectSummaryDTO> getAllUserProjectsSummary(Long userID) {
-        return List.of();
+
+        List<ProjectSummaryDTO> result = projectRepository.getAllAccessibleByUser(userID)
+                .stream()
+                .map( e -> projectMapper.toProjectSummaryDTO(e))
+                .toList();
+
+        return result;
     }
 
     @Override
