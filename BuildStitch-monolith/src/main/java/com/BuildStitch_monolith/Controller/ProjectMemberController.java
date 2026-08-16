@@ -4,6 +4,7 @@ import com.BuildStitch_monolith.DTO.ProjectMember.InviteMemberRequestDTO;
 import com.BuildStitch_monolith.DTO.ProjectMember.MemberResponseDTO;
 import com.BuildStitch_monolith.DTO.ProjectMember.ProjectMemberRoleDTO;
 import com.BuildStitch_monolith.Service.ProjectMemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class ProjectMemberController {
 
     @PostMapping("/invite")
     public ResponseEntity<MemberResponseDTO> inviteMember(@PathVariable Long projectId,
-                                                          @RequestBody InviteMemberRequestDTO member){
+                                                          @RequestBody @Valid InviteMemberRequestDTO member){
         Long userId = 1L;
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(projectMemberService.inviteMember(projectId, member, userId));
@@ -35,7 +36,7 @@ public class ProjectMemberController {
     @PatchMapping("/update-role/{memberId}")
     public ResponseEntity<MemberResponseDTO> updateMemberRole(@PathVariable Long projectId,
                                                               @PathVariable Long memberId,
-                                                              @RequestBody ProjectMemberRoleDTO role){
+                                                              @RequestBody @Valid ProjectMemberRoleDTO role){
         Long userId = 1L;
         return ResponseEntity.ok(projectMemberService.updateMemberRole(projectId, memberId, role, userId));
     }

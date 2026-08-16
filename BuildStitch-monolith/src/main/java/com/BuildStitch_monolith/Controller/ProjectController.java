@@ -4,6 +4,7 @@ import com.BuildStitch_monolith.DTO.Project.ProjectRequest;
 import com.BuildStitch_monolith.DTO.Project.ProjectResponse;
 import com.BuildStitch_monolith.DTO.Project.ProjectSummaryDTO;
 import com.BuildStitch_monolith.Service.ProjectService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest projectRequest){
+    public ResponseEntity<ProjectResponse> createProject(@RequestBody @Valid ProjectRequest projectRequest){
         Long userId = 1L;
         return new ResponseEntity<>(projectService.createProject(userId, projectRequest),
                 HttpStatus.CREATED);
@@ -38,7 +39,7 @@ public class ProjectController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<ProjectResponse> updateProject(@PathVariable Long id,
-                                                         @RequestBody ProjectRequest projectRequest){
+                                                         @RequestBody @Valid ProjectRequest projectRequest){
         Long userId = 1L;
         return ResponseEntity.ok(projectService.updateProject(userId, id, projectRequest));
     }

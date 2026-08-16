@@ -1,6 +1,8 @@
 package com.BuildStitch_monolith.DTO.Project;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record ProjectRequest(
-       String name
+       @NotBlank String name
 ) {
 }
