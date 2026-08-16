@@ -14,6 +14,6 @@ public interface ProjectMapper {
 
     ProjectSummaryDTO toProjectSummaryDTO(Project project);
 
-    @Mapping(source = "avatar_url", target = "avatarUrl")
+    @Mapping(source = "avatarUrl", target = "avatarUrl")
     UserProfileDTO toUserProfileDTO(User user);
 }

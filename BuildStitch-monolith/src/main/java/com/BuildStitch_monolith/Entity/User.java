@@ -21,7 +21,7 @@ public class User {
     private String email;
     private String password;
     private String name;
-    private String avatar_url;
+    private String avatarUrl;
 
     @CreationTimestamp
     private Instant createdAt;
