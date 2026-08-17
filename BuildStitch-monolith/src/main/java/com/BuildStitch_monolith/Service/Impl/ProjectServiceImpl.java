@@ -5,6 +5,7 @@ import com.BuildStitch_monolith.DTO.Project.ProjectResponse;
 import com.BuildStitch_monolith.DTO.Project.ProjectSummaryDTO;
 import com.BuildStitch_monolith.Entity.Project;
 import com.BuildStitch_monolith.Entity.User;
+import com.BuildStitch_monolith.Exception.ResourceNotFoundException;
 import com.BuildStitch_monolith.Mapper.ProjectMapper;
 import com.BuildStitch_monolith.Repository.ProjectRepository;
 import com.BuildStitch_monolith.Repository.UserRepository;
@@ -44,7 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public ProjectResponse createProject(Long userId, ProjectRequest projectRequest) {
-        User owner = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("hehe"));
+        User owner = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User not found"));
 
         Project project = Project.builder()
                 .name(projectRequest.name())
