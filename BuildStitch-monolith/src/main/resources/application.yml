@@ -15,3 +15,5 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+jwt.secret-key: thisIsMySecretKey21082026buildstitch
