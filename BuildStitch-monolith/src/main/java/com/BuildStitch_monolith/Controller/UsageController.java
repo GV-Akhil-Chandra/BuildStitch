@@ -2,6 +2,7 @@ package com.BuildStitch_monolith.Controller;
 
 import com.BuildStitch_monolith.DTO.Subscription.PlanLimitsResponseDTO;
 import com.BuildStitch_monolith.DTO.Subscription.UsageTodayResponseDTO;
+import com.BuildStitch_monolith.Security.JwtService;
 import com.BuildStitch_monolith.Service.UsageService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UsageController {
     private final UsageService usageService;
+    private final JwtService jwtService;
 
     @GetMapping("/today")
     public ResponseEntity<UsageTodayResponseDTO> todayUsage(){
-        Long userId = 1L;
+        Long userId = jwtService.getCurrentUserId();
         return ResponseEntity.ok(usageService.getUserTodayUsage(userId));
     }
 
     @GetMapping("/plan-limits")
     public ResponseEntity<PlanLimitsResponseDTO> getPlanLimits(){
-        Long userId = 1L;
+        Long userId = jwtService.getCurrentUserId();
         return ResponseEntity.ok(usageService.getUserSubscriptionLimits(userId));
     }
 }

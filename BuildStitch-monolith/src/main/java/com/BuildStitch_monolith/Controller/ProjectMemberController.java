@@ -3,6 +3,7 @@ package com.BuildStitch_monolith.Controller;
 import com.BuildStitch_monolith.DTO.ProjectMember.InviteMemberRequestDTO;
 import com.BuildStitch_monolith.DTO.ProjectMember.MemberResponseDTO;
 import com.BuildStitch_monolith.DTO.ProjectMember.ProjectMemberRoleDTO;
+import com.BuildStitch_monolith.Security.JwtService;
 import com.BuildStitch_monolith.Service.ProjectMemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,17 +19,18 @@ import java.util.List;
 public class ProjectMemberController {
 
     private final ProjectMemberService projectMemberService;
+    private final JwtService jwtService;
 
     @GetMapping
     public ResponseEntity<List<MemberResponseDTO>> getProjectMembers(@PathVariable Long projectId){
-        Long userId = 1L;
+        Long userId = jwtService.getCurrentUserId();
         return ResponseEntity.ok(projectMemberService.getAllProjectMembers(projectId, userId));
     }
 
     @PostMapping("/invite")
     public ResponseEntity<MemberResponseDTO> inviteMember(@PathVariable Long projectId,
                                                           @RequestBody @Valid InviteMemberRequestDTO member){
-        Long userId = 1L;
+        Long userId = jwtService.getCurrentUserId();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(projectMemberService.inviteMember(projectId, member, userId));
     }
@@ -37,14 +39,14 @@ public class ProjectMemberController {
     public ResponseEntity<MemberResponseDTO> updateMemberRole(@PathVariable Long projectId,
                                                               @PathVariable Long memberId,
                                                               @RequestBody @Valid ProjectMemberRoleDTO role){
-        Long userId = 1L;
+        Long userId = jwtService.getCurrentUserId();
         return ResponseEntity.ok(projectMemberService.updateMemberRole(projectId, memberId, role, userId));
     }
 
     @DeleteMapping("/delete/{memberId}")
     public ResponseEntity<Void > deleteMember(@PathVariable Long projectId,
                                                               @PathVariable Long memberId){
-        Long userId = 1L;
+        Long userId = jwtService.getCurrentUserId();
         projectMemberService.deleteProjectMember(projectId, memberId, userId);
         return ResponseEntity.noContent().build();
     }

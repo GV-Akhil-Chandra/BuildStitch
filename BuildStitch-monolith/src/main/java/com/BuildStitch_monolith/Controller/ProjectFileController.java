@@ -2,6 +2,7 @@ package com.BuildStitch_monolith.Controller;
 
 import com.BuildStitch_monolith.DTO.ProjectFile.FileContentResponse;
 import com.BuildStitch_monolith.DTO.ProjectFile.FileNode;
+import com.BuildStitch_monolith.Security.JwtService;
 import com.BuildStitch_monolith.Service.ProjectFileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +18,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectFileController {
     private final ProjectFileService projectFileService;
+    private final JwtService jwtService;
 
     @GetMapping()
     public ResponseEntity<List<FileNode>> getProjectFiles(@PathVariable Long projectId){
-        Long userId = 1L;
+        Long userId = jwtService.getCurrentUserId();
         return ResponseEntity.ok(projectFileService.getProjectFilesTree(projectId, userId));
     }
 
     @GetMapping("/{*path}")
     public ResponseEntity<FileContentResponse> getFile(@PathVariable Long projectId,
                                                        @PathVariable String path){
-        Long userId = 1L;
+        Long userId = jwtService.getCurrentUserId();
         return ResponseEntity.ok(projectFileService.getFileContent(projectId, path, userId));
     }
 }

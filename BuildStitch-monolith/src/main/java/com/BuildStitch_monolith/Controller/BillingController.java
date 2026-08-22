@@ -4,6 +4,7 @@ import com.BuildStitch_monolith.DTO.Subscription.CheckoutRequestDTO;
 import com.BuildStitch_monolith.DTO.Subscription.CheckoutResponseDTO;
 import com.BuildStitch_monolith.DTO.Subscription.PlanResponseDTO;
 import com.BuildStitch_monolith.DTO.Subscription.SubscriptionResponseDTO;
+import com.BuildStitch_monolith.Security.JwtService;
 import com.BuildStitch_monolith.Service.PlanService;
 import com.BuildStitch_monolith.Service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class BillingController {
 
     private final PlanService planService;
     private final SubscriptionService subscriptionService;
+    private final JwtService jwtService;
 
     @GetMapping("/plans")
     public ResponseEntity<List<PlanResponseDTO>> getAllPlans(){
@@ -27,13 +29,13 @@ public class BillingController {
 
     @GetMapping("/me/subscription")
     public ResponseEntity<SubscriptionResponseDTO> getCurrentUserPlan(){
-        Long userId = 1L;
+        Long userId = jwtService.getCurrentUserId();
         return ResponseEntity.ok(subscriptionService.getCurrentSubscription(userId));
     }
 
     @PostMapping("/checkout")
     public ResponseEntity<CheckoutResponseDTO> createCheckoutResponse(@RequestBody CheckoutRequestDTO request){
-        Long userId = 1L;
+        Long userId = jwtService.getCurrentUserId();
         return ResponseEntity.ok(subscriptionService.createCheckoutSessionUrl(request));
     }
 
